@@ -247,45 +247,46 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 200);
     }
 
-    // --- Lightbox & Interactive Cake Functions ---
+    // --- Lightbox Functions ---
     const polaroidCards = document.querySelectorAll('.polaroid-card');
-    const lightboxCakeContainer = document.getElementById('lightbox-cake-container');
-    const cakeWishMessage = document.getElementById('cake-wish-message');
-    const candles = document.querySelectorAll('.candle');
-    let blownOutCandles = 0;
-
-    // Reset candles to default state (flames lit)
-    function resetCake() {
-        blownOutCandles = 0;
-        cakeWishMessage.classList.add('hidden');
-        candles.forEach(candle => {
-            const flame = candle.querySelector('.flame');
-            if (flame) flame.classList.remove('out');
-        });
-    }
-
+    
     polaroidCards.forEach(card => {
         card.addEventListener('click', () => {
             const img = card.querySelector('.polaroid-img');
             const caption = card.querySelector('.polaroid-caption');
-            const index = card.getAttribute('data-index');
             
             lightbox.style.display = 'block';
             lightboxImg.src = img.src;
             lightboxCaption.textContent = caption.textContent;
             
-            // Check if this is the 3rd photo (Special Selfie with Cake)
-            if (index === '2') {
-                lightboxCakeContainer.classList.remove('hidden');
-                resetCake();
-            } else {
-                lightboxCakeContainer.classList.add('hidden');
-            }
-            
             // Explode a few particles upon opening for surprise
             generateBurst(window.innerWidth / 2, window.innerHeight / 2, 20);
         });
     });
+
+    function closeLightbox() {
+        lightbox.style.display = 'none';
+    }
+
+    lightboxClose.addEventListener('click', closeLightbox);
+
+    lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox || e.target === lightboxClose) {
+            closeLightbox();
+        }
+    });
+
+    // --- Interactive Birthday Cake Functions (Main Page) ---
+    const cakeWishMessageMain = document.getElementById('cake-wish-message-main');
+    const candlesMain = document.querySelectorAll('#candles-row-main .candle');
+    let blownOutCandlesMain = 0;
+
+    // Reset speech synthesis when page is interacted
+    function stopSpeech() {
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+        }
+    }
 
     // Handle voice greeting speech using browser Web Speech API
     function playVoiceGreeting() {
@@ -310,8 +311,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Handle candle blowing click
-    candles.forEach(candle => {
+    // Handle candle blowing click on main page
+    candlesMain.forEach(candle => {
         candle.addEventListener('click', (e) => {
             const flame = candle.querySelector('.flame');
             if (flame && !flame.classList.contains('out')) {
@@ -321,12 +322,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 const rect = candle.getBoundingClientRect();
                 generateBurst(rect.left + rect.width / 2, rect.top, 15);
                 
-                blownOutCandles++;
+                blownOutCandlesMain++;
                 
                 // If all 5 candles are blown out
-                if (blownOutCandles === 5) {
+                if (blownOutCandlesMain === 5) {
                     setTimeout(() => {
-                        cakeWishMessage.classList.remove('hidden');
+                        cakeWishMessageMain.classList.remove('hidden');
                         // Massive burst of confetti in the center
                         generateBurst(window.innerWidth / 2, window.innerHeight / 2, 80);
                         // Congratulate her with a custom audio voice greeting!
@@ -335,22 +336,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         });
-    });
-
-    function closeLightbox() {
-        lightbox.style.display = 'none';
-        if ('speechSynthesis' in window) {
-            window.speechSynthesis.cancel(); // Stop talking if closed
-        }
-        resetCake();
-    }
-
-    lightboxClose.addEventListener('click', closeLightbox);
-
-    lightbox.addEventListener('click', (e) => {
-        if (e.target === lightbox || e.target === lightboxClose) {
-            closeLightbox();
-        }
     });
 
     // --- Audio control ---

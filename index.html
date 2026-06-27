@@ -104,6 +104,36 @@
             <div class="letter-hint">اضغطي على المظروف لفتحه أو إغلاقه 👆</div>
         </section>
 
+        <!-- INTERACTIVE BIRTHDAY CAKE SECTION -->
+        <section class="cake-section" id="cake-section">
+            <div class="section-title">
+                <h2>🎂 اطفي شمع عيد ميلادك الـ 22 يا مُنَّه!</h2>
+                <p>اضغطي على الشمع لتطفئيه وتتمني أمنية جميلة ✨</p>
+            </div>
+            
+            <div class="cake-container-main">
+                <div class="cake-box-main">
+                    <div class="cake">
+                        <div class="cake-top"></div>
+                        <div class="cake-middle"></div>
+                        <div class="cake-bottom"></div>
+                        <div class="candles-row" id="candles-row-main">
+                            <div class="candle" id="candle-1"><div class="flame"></div></div>
+                            <div class="candle" id="candle-2"><div class="flame"></div></div>
+                            <div class="candle" id="candle-3"><div class="flame"></div></div>
+                            <div class="candle" id="candle-4"><div class="flame"></div></div>
+                            <div class="candle" id="candle-5"><div class="flame"></div></div>
+                        </div>
+                    </div>
+                    
+                    <div id="cake-wish-message-main" class="cake-wish-message-main hidden">
+                        <h4>✨ أمنيتك اتحققت وسنتك الجديدة سعيدة! ✨</h4>
+                        <p>ربنا يخلينا لبعض يا أحلى مُنَّه في الدنيا، وسنة 22 جميلة كلها حب وفرحة وسعادة! 💖</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- PHOTO GALLERY (POLAROID STYLE) -->
         <section class="gallery-section">
             <div class="section-title">
@@ -132,7 +162,7 @@
 
                 <!-- Polaroid 3 -->
                 <div class="polaroid-card" style="--rotation: -2deg; border: 2px solid var(--accent);" data-index="2" id="polaroid-special">
-                    <div class="celebration-label special-label">🎂 كتفي في كتفك (اضغطي للتورتة!)</div>
+                    <div class="celebration-label special-label">🎂 كتفي في كتفك!</div>
                     <div class="polaroid-img-box">
                         <img src="images/photo3.jpg" alt="سيلفي مع بعض وتورتة احتفال" class="polaroid-img">
                     </div>
@@ -160,7 +190,7 @@
             
             <div class="gallery-guide">
                 <i class="fa-solid fa-circle-info"></i>
-                اضغطي على أي صورة لتكبيرها، واضغطي على الصورة الثالثة خصوصاً لإطفاء شمع عيد ميلادك!
+                اضغطي على أي صورة لتكبيرها وقراءة الذكرى الجميلة الخاصة بها!
             </div>
         </section>
 
@@ -191,38 +221,9 @@
     <!-- LIGHTBOX MODAL FOR IMAGES -->
     <div id="lightbox" class="lightbox">
         <span class="lightbox-close">&times;</span>
-        <div class="lightbox-layout">
-            <div class="lightbox-media-box">
-                <img class="lightbox-content" id="lightbox-img" alt="Enlarged photo">
-                <div id="lightbox-caption" class="lightbox-caption"></div>
-            </div>
-            
-            <!-- Special Interactive Cake Sidebar/Overlay -->
-            <div id="lightbox-cake-container" class="lightbox-cake-container hidden">
-                <div class="cake-box">
-                    <h3 class="cake-instruction">🎂 اطفي شمع عيد ميلادك الـ 22 يا مُنَّه!</h3>
-                    <p class="cake-instruction-sub">اضغطي على كل شمعة لتطفئيها وتتمني أمنية ✨</p>
-                    
-                    <div class="cake">
-                        <div class="cake-top"></div>
-                        <div class="cake-middle"></div>
-                        <div class="cake-bottom"></div>
-                        <!-- Candles will be spawned in JS dynamically or here -->
-                        <div class="candles-row" id="candles-row">
-                            <div class="candle" id="candle-1"><div class="flame"></div></div>
-                            <div class="candle" id="candle-2"><div class="flame"></div></div>
-                            <div class="candle" id="candle-3"><div class="flame"></div></div>
-                            <div class="candle" id="candle-4"><div class="flame"></div></div>
-                            <div class="candle" id="candle-5"><div class="flame"></div></div>
-                        </div>
-                    </div>
-                    
-                    <div id="cake-wish-message" class="cake-wish-message hidden">
-                        <h4>✨ أمنيتك اتحققت! ✨</h4>
-                        <p>ربنا يخلينا لبعض يا أحلى مُنَّه في الدنيا، وسنة 22 جميلة كلها حب وفرحة وسعادة! 💖</p>
-                    </div>
-                </div>
-            </div>
+        <div class="lightbox-content-wrapper">
+            <img class="lightbox-content" id="lightbox-img" alt="Enlarged photo">
+            <div id="lightbox-caption" class="lightbox-caption"></div>
         </div>
     </div>
 
