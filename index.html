@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عيد ميلاد سعيد يا مُنَّه! 💖 22 سنة من الجمال</title>
+    <meta name="description" content="كل سنة وأنتِ طيبة يا مُنَّه (LALA / منمونة / إيمان) بمناسبة عيد ميلادك الـ 22. موقع تفاعلي خاص للاحتفال بكِ.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700;900&family=Reem+Kufi:wght@400;700&family=Satisfy&family=Caveat:wght@700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom Style Sheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Background Canvas for Confetti -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <!-- FLOATING BACKGROUND ELEMENTS -->
+    <div class="floating-bg" id="floating-bg"></div>
+
+    <!-- INTRO OVERLAY SCREEN -->
+    <div id="intro-overlay" class="intro-overlay">
+        <div class="intro-card">
+            <div class="heart-pulse-wrapper">
+                <div class="heart-glow"></div>
+                <button id="entry-btn" class="heart-btn" aria-label="اضغط هنا للدخول">
+                    <i class="fa-solid fa-heart"></i>
+                </button>
+            </div>
+            <h1 class="intro-title">عيد ميلاد مُنَّه الـ 22 ✨</h1>
+            <p class="intro-subtitle">اضغطي على القلب لدخول عالم الاحتفال الخاص بكِ...</p>
+        </div>
+    </div>
+
+    <!-- AUDIO PLAYER CONTROLLER -->
+    <div id="audio-container" class="audio-container hidden">
+        <div class="vinyl-wrapper">
+            <img id="vinyl-disc" src="https://images.unsplash.com/photo-1603048588665-791ca8aea617?q=80&w=200&auto=format&fit=crop" alt="Vinyl record" class="vinyl-disc">
+            <div class="vinyl-center"></div>
+        </div>
+        <div class="audio-controls">
+            <button id="play-pause-btn" class="audio-btn" aria-label="تشغيل/إيقاف الموسيقى">
+                <i class="fa-solid fa-pause"></i>
+            </button>
+            <span class="song-info">لحن ميلادك 🎶</span>
+        </div>
+        <!-- Default public romantic piano music, can be overwritten with a local song.mp3 -->
+        <audio id="bg-music" loop>
+            <source src="song.mp3" type="audio/mpeg">
+            <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <!-- MAIN WEB CONTENT (Initially Hidden) -->
+    <main id="main-content" class="main-content hidden">
+
+        <!-- HEADER SECTION -->
+        <header class="hero-section">
+            <div class="hero-container">
+                <div class="glow-title-box">
+                    <h2 class="hero-salutation">كل سنة وأنتِ طيبة يا...</h2>
+                    <!-- Nicknames Carousel -->
+                    <div class="nickname-carousel">
+                        <span id="typed-nickname" class="nickname-text">مُنَّه</span>
+                    </div>
+                </div>
+                <div class="badge-22">
+                    <span class="badge-num">22</span>
+                    <span class="badge-lbl">سنة من الدلال ✨</span>
+                </div>
+                <p class="hero-paragraph">اليوم بنحتفل بأجمل وأرق بنت في الدنيا، اللي نورت حياتنا وكل دقيقة بتمر وهي فيها بتكون أحلى عيد.</p>
+                <div class="scroll-down-indicator">
+                    <span>انزلي لتحت وشوفي المفاجآت 👇</span>
+                    <i class="fa-solid fa-chevron-down bounce-arrow"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- CARD / GREETING LETTER SECTION -->
+        <section class="letter-section">
+            <div class="section-title">
+                <h2>💌 رسالة حب من القلب</h2>
+                <p>مكتوبة مخصوص ليكِ بمناسبة الـ 22</p>
+            </div>
+            <div class="envelope-wrapper">
+                <div class="envelope" id="envelope">
+                    <div class="envelope-flap"></div>
+                    <div class="envelope-pocket"></div>
+                    <div class="letter" id="letter">
+                        <div class="letter-content">
+                            <h3>حبيبتي مٌنَّه، 💖</h3>
+                            <p>النهاردة عيد ميلادك الـ 22، وسنتك الجديدة دي يا رب تكون كلها سعادة ونجاح وتحققي فيها كل أحلامك. </p>
+                            <p>أنتِ مش بس "إيمان" الاسم الحقيقي اللي كله بركة، أنتِ "منمونة" الدلوعة، و"LALA" الشقية، وأنتِ "مُنَّه" حبيبة قلبي وسندي. وجودك في حياتي بيخليها أجمل بكتير.</p>
+                            <p>كل ثانية وأنتِ في قلبي، وكل سنة وإحنا مع بعض وأنا شايف ضحكتك اللي بتنور الدنيا. عيد ميلاد سعيد يا أحلى وأغلى منمن في الكون! 🥰</p>
+                            <div class="letter-signature">حبيبك للأبد 🌹</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="letter-hint">اضغطي على المظروف لفتحه أو إغلاقه 👆</div>
+        </section>
+
+        <!-- PHOTO GALLERY (POLAROID STYLE) -->
+        <section class="gallery-section">
+            <div class="section-title">
+                <h2>📸 معرض ذكرياتنا الجميلة</h2>
+                <p>بعض اللقطات والمفاجآت لضحكتك الجميلة</p>
+            </div>
+            
+            <div class="polaroid-wrapper">
+                <!-- Polaroid 1 -->
+                <div class="polaroid-card" style="--rotation: -5deg;">
+                    <div class="polaroid-img-box">
+                        <img src="images/photo1.jpg" alt="صورة حبيبتي منة 1" class="polaroid-img">
+                    </div>
+                    <div class="polaroid-caption">ضحكتك اللي بتنور الدنيا كلها 🌟</div>
+                </div>
+
+                <!-- Polaroid 2 -->
+                <div class="polaroid-card" style="--rotation: 3deg;">
+                    <div class="polaroid-img-box">
+                        <img src="images/photo2.jpg" alt="صورة حبيبتي منة 2" class="polaroid-img">
+                    </div>
+                    <div class="polaroid-caption">أجمل وأرق بنت تمت الـ 22 🎂</div>
+                </div>
+
+                <!-- Polaroid 3 -->
+                <div class="polaroid-card" style="--rotation: -2deg;">
+                    <div class="polaroid-img-box">
+                        <img src="images/photo3.jpg" alt="صورة حبيبتي منة 3" class="polaroid-img">
+                    </div>
+                    <div class="polaroid-caption">كل لحظة معاكِ هي عيد حقيقي 💞</div>
+                </div>
+            </div>
+            
+            <div class="gallery-guide">
+                <i class="fa-solid fa-circle-info"></i>
+                يمكنك تبديل هذه الصور بصورك المفضلة بسهولة في مجلد المشروع!
+            </div>
+        </section>
+
+        <!-- INTERACTIVE WISH / BALLOON POPPING GAME -->
+        <section class="interactive-section">
+            <div class="section-title">
+                <h2>🎈 فرقعي البالونات لمعرفة أسباب حبي ليكِ!</h2>
+                <p>كل بالونة هتفرقعيها هتطلعلك رسالة لطيفة سرية</p>
+            </div>
+            <div class="balloon-container" id="balloon-container">
+                <!-- Balloons will be dynamically generated by JS for absolute flexibility -->
+            </div>
+            <div id="wish-message-box" class="wish-message-box hidden">
+                <span class="heart-decor">💖</span>
+                <p id="wish-text">اضغطي على بالونة لتبدأ المفاجأة!</p>
+                <span class="heart-decor">💖</span>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="celebration-footer">
+            <p>صُنع بكل الحب لحبيبتي مُنَّه بمناسبة عيد ميلادها الـ 22 🎂🎈</p>
+            <p class="footer-sub">&copy; 2026 - كل عام وأنتِ بقلبي</p>
+        </footer>
+
+    </main>
+
+    <!-- LIGHTBOX MODAL FOR IMAGES -->
+    <div id="lightbox" class="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <img class="lightbox-content" id="lightbox-img" alt="Enlarged photo">
+        <div id="lightbox-caption" class="lightbox-caption"></div>
+    </div>
+
+    <!-- Script file -->
+    <script src="app.js"></script>
+</body>
+</html>
