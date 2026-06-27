@@ -247,29 +247,109 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 200);
     }
 
-    // --- Lightbox Functions ---
+    // --- Lightbox & Interactive Cake Functions ---
     const polaroidCards = document.querySelectorAll('.polaroid-card');
+    const lightboxCakeContainer = document.getElementById('lightbox-cake-container');
+    const cakeWishMessage = document.getElementById('cake-wish-message');
+    const candles = document.querySelectorAll('.candle');
+    let blownOutCandles = 0;
+
+    // Reset candles to default state (flames lit)
+    function resetCake() {
+        blownOutCandles = 0;
+        cakeWishMessage.classList.add('hidden');
+        candles.forEach(candle => {
+            const flame = candle.querySelector('.flame');
+            if (flame) flame.classList.remove('out');
+        });
+    }
+
     polaroidCards.forEach(card => {
         card.addEventListener('click', () => {
             const img = card.querySelector('.polaroid-img');
             const caption = card.querySelector('.polaroid-caption');
+            const index = card.getAttribute('data-index');
             
             lightbox.style.display = 'block';
             lightboxImg.src = img.src;
             lightboxCaption.textContent = caption.textContent;
+            
+            // Check if this is the 3rd photo (Special Selfie with Cake)
+            if (index === '2') {
+                lightboxCakeContainer.classList.remove('hidden');
+                resetCake();
+            } else {
+                lightboxCakeContainer.classList.add('hidden');
+            }
             
             // Explode a few particles upon opening for surprise
             generateBurst(window.innerWidth / 2, window.innerHeight / 2, 20);
         });
     });
 
-    lightboxClose.addEventListener('click', () => {
-        lightbox.style.display = 'none';
+    // Handle voice greeting speech using browser Web Speech API
+    function playVoiceGreeting() {
+        if ('speechSynthesis' in window) {
+            // Cancel any active speech synthesis
+            window.speechSynthesis.cancel();
+            
+            const message = "كل سنة وأنتِ طيبة يا إيمان، يا منمونة يا أحلى لا لا في الدنيا! عيد ميلاد سعيد وعقبال مية سنة حلوة وأنتِ في الـ ٢٢ مع حبيبك دايماً وبخير وسعادة!";
+            const utterance = new SpeechSynthesisUtterance(message);
+            utterance.lang = 'ar-EG'; // Egyptian Arabic localization
+            utterance.rate = 0.82; // Slower rate for clear, warm pacing
+            utterance.pitch = 1.05; // Slightly higher pitch for positive/celebratory tone
+            
+            // Try to bind a specific Arabic voice if available
+            const voices = window.speechSynthesis.getVoices();
+            const arabicVoice = voices.find(v => v.lang.includes('ar'));
+            if (arabicVoice) {
+                utterance.voice = arabicVoice;
+            }
+            
+            window.speechSynthesis.speak(utterance);
+        }
+    }
+
+    // Handle candle blowing click
+    candles.forEach(candle => {
+        candle.addEventListener('click', (e) => {
+            const flame = candle.querySelector('.flame');
+            if (flame && !flame.classList.contains('out')) {
+                flame.classList.add('out');
+                
+                // Explode particles at candle position
+                const rect = candle.getBoundingClientRect();
+                generateBurst(rect.left + rect.width / 2, rect.top, 15);
+                
+                blownOutCandles++;
+                
+                // If all 5 candles are blown out
+                if (blownOutCandles === 5) {
+                    setTimeout(() => {
+                        cakeWishMessage.classList.remove('hidden');
+                        // Massive burst of confetti in the center
+                        generateBurst(window.innerWidth / 2, window.innerHeight / 2, 80);
+                        // Congratulate her with a custom audio voice greeting!
+                        playVoiceGreeting();
+                    }, 400);
+                }
+            }
+        });
     });
+
+    function closeLightbox() {
+        lightbox.style.display = 'none';
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel(); // Stop talking if closed
+        }
+        resetCake();
+    }
+
+    lightboxClose.addEventListener('click', closeLightbox);
 
     lightbox.addEventListener('click', (e) => {
         if (e.target === lightbox || e.target === lightboxClose) {
-            lightbox.style.display = 'none';
+            closeLightbox();
         }
     });
 

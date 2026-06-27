@@ -108,38 +108,59 @@
         <section class="gallery-section">
             <div class="section-title">
                 <h2>📸 معرض ذكرياتنا الجميلة</h2>
-                <p>بعض اللقطات والمفاجآت لضحكتك الجميلة</p>
+                <p>لقطات مميزة من أوقاتنا وضحكتك التي تنير حياتي</p>
             </div>
             
             <div class="polaroid-wrapper">
                 <!-- Polaroid 1 -->
-                <div class="polaroid-card" style="--rotation: -5deg;">
+                <div class="polaroid-card" style="--rotation: -5deg;" data-index="0">
+                    <div class="celebration-label">🌟 ضحكة من القلب!</div>
                     <div class="polaroid-img-box">
-                        <img src="images/photo1.jpg" alt="صورة حبيبتي منة 1" class="polaroid-img">
+                        <img src="images/photo1.jpg" alt="ضحكة من القلب" class="polaroid-img">
                     </div>
-                    <div class="polaroid-caption">ضحكتك اللي بتنور الدنيا كلها 🌟</div>
+                    <div class="polaroid-caption">ضحكتك التلقائية في وسط الشارع هي اللي بتخليني أضحك من قلبي وتديني طاقة إيجابية. كل سنة وضحكتك ماليّة حياتنا فرحة يا منمن! 😍</div>
                 </div>
 
                 <!-- Polaroid 2 -->
-                <div class="polaroid-card" style="--rotation: 3deg;">
+                <div class="polaroid-card" style="--rotation: 3deg;" data-index="1">
+                    <div class="celebration-label">🍫 حلوة الحلوين!</div>
                     <div class="polaroid-img-box">
-                        <img src="images/photo2.jpg" alt="صورة حبيبتي منة 2" class="polaroid-img">
+                        <img src="images/photo2.jpg" alt="حلوة الحلوين" class="polaroid-img">
                     </div>
-                    <div class="polaroid-caption">أجمل وأرق بنت تمت الـ 22 🎂</div>
+                    <div class="polaroid-caption">الشوكولاتة حلوة بس وجودك وضحكتك الجميلة هما اللي محليين كل لحظة بنعيشها. بالهنا والشفا على قلبك يا أحلى منمونة! 💕</div>
                 </div>
 
                 <!-- Polaroid 3 -->
-                <div class="polaroid-card" style="--rotation: -2deg;">
+                <div class="polaroid-card" style="--rotation: -2deg; border: 2px solid var(--accent);" data-index="2" id="polaroid-special">
+                    <div class="celebration-label special-label">🎂 كتفي في كتفك (اضغطي للتورتة!)</div>
                     <div class="polaroid-img-box">
-                        <img src="images/photo3.jpg" alt="صورة حبيبتي منة 3" class="polaroid-img">
+                        <img src="images/photo3.jpg" alt="سيلفي مع بعض وتورتة احتفال" class="polaroid-img">
                     </div>
-                    <div class="polaroid-caption">كل لحظة معاكِ هي عيد حقيقي 💞</div>
+                    <div class="polaroid-caption">أول سيلفي لينا سوا في الهوا والغيوم، ضحكتك وجنبك ليا هما أماني وسندي. النهاردة عيد ميلادك الـ 22 وأجمل أمنية ليا إننا نفضل سوا دايماً! 💑☁️</div>
+                </div>
+
+                <!-- Polaroid 4 -->
+                <div class="polaroid-card" style="--rotation: 4deg;" data-index="3">
+                    <div class="celebration-label">☀️ شمس حياتي!</div>
+                    <div class="polaroid-img-box">
+                        <img src="images/photo4.jpg" alt="شمس حياتي" class="polaroid-img">
+                    </div>
+                    <div class="polaroid-caption">سيلفي الشارع والضحكة اللي طالعة من جوة قلوبنا. ملامحك الجميلة وجنبك بيكملوا نصي التاني. ربنا يخلينا لبعض يا شريكة العمر. 💑</div>
+                </div>
+
+                <!-- Polaroid 5 -->
+                <div class="polaroid-card" style="--rotation: -3deg;" data-index="4">
+                    <div class="celebration-label">🌊 وردة البحر!</div>
+                    <div class="polaroid-img-box">
+                        <img src="images/photo5.png" alt="وردة البحر" class="polaroid-img">
+                    </div>
+                    <div class="polaroid-caption">الفستان الورد والضحكة الهادية قدام البحر، جمالك طبيعي وهادي زي الأمواج. كل سنة وأنتِ وردة مفتحة في قلبي يا LALA. 🌸🌊</div>
                 </div>
             </div>
             
             <div class="gallery-guide">
                 <i class="fa-solid fa-circle-info"></i>
-                يمكنك تبديل هذه الصور بصورك المفضلة بسهولة في مجلد المشروع!
+                اضغطي على أي صورة لتكبيرها، واضغطي على الصورة الثالثة خصوصاً لإطفاء شمع عيد ميلادك!
             </div>
         </section>
 
@@ -170,8 +191,39 @@
     <!-- LIGHTBOX MODAL FOR IMAGES -->
     <div id="lightbox" class="lightbox">
         <span class="lightbox-close">&times;</span>
-        <img class="lightbox-content" id="lightbox-img" alt="Enlarged photo">
-        <div id="lightbox-caption" class="lightbox-caption"></div>
+        <div class="lightbox-layout">
+            <div class="lightbox-media-box">
+                <img class="lightbox-content" id="lightbox-img" alt="Enlarged photo">
+                <div id="lightbox-caption" class="lightbox-caption"></div>
+            </div>
+            
+            <!-- Special Interactive Cake Sidebar/Overlay -->
+            <div id="lightbox-cake-container" class="lightbox-cake-container hidden">
+                <div class="cake-box">
+                    <h3 class="cake-instruction">🎂 اطفي شمع عيد ميلادك الـ 22 يا مُنَّه!</h3>
+                    <p class="cake-instruction-sub">اضغطي على كل شمعة لتطفئيها وتتمني أمنية ✨</p>
+                    
+                    <div class="cake">
+                        <div class="cake-top"></div>
+                        <div class="cake-middle"></div>
+                        <div class="cake-bottom"></div>
+                        <!-- Candles will be spawned in JS dynamically or here -->
+                        <div class="candles-row" id="candles-row">
+                            <div class="candle" id="candle-1"><div class="flame"></div></div>
+                            <div class="candle" id="candle-2"><div class="flame"></div></div>
+                            <div class="candle" id="candle-3"><div class="flame"></div></div>
+                            <div class="candle" id="candle-4"><div class="flame"></div></div>
+                            <div class="candle" id="candle-5"><div class="flame"></div></div>
+                        </div>
+                    </div>
+                    
+                    <div id="cake-wish-message" class="cake-wish-message hidden">
+                        <h4>✨ أمنيتك اتحققت! ✨</h4>
+                        <p>ربنا يخلينا لبعض يا أحلى مُنَّه في الدنيا، وسنة 22 جميلة كلها حب وفرحة وسعادة! 💖</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Script file -->

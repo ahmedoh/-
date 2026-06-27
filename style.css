@@ -752,63 +752,313 @@ body {
     50% { transform: scale(1.2); }
 }
 
+/* CELEBRATION LABELS FOR POLAROIDS */
+.celebration-label {
+    background: linear-gradient(135deg, var(--primary) 0%, #d81b60 100%);
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-align: center;
+    padding: 6px 12px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.special-label {
+    background: linear-gradient(135deg, var(--accent) 0%, #b8860b 100%) !important;
+    color: #090613 !important;
+    font-weight: 900;
+    animation: labelPulse 1.5s infinite alternate;
+}
+
+@keyframes labelPulse {
+    0% { box-shadow: 0 0 5px var(--accent-glow); transform: scale(1); }
+    100% { box-shadow: 0 0 15px var(--accent); transform: scale(1.02); }
+}
+
 /* LIGHTBOX MODAL */
 .lightbox {
     display: none;
     position: fixed;
     z-index: 2000;
-    padding-top: 80px;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    overflow: auto;
-    background-color: rgba(6, 4, 12, 0.95);
-    backdrop-filter: blur(8px);
+    overflow-y: auto;
+    background-color: rgba(6, 4, 12, 0.96);
+    backdrop-filter: blur(10px);
+    padding: 40px 20px;
+}
+
+.lightbox-layout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    max-width: 1100px;
+    margin: 60px auto auto auto;
+    flex-wrap: wrap;
+}
+
+.lightbox-media-box {
+    flex: 1.2;
+    min-width: 300px;
+    max-width: 550px;
+    text-align: center;
 }
 
 .lightbox-content {
-    margin: auto;
     display: block;
-    max-width: 80%;
-    max-height: 70vh;
-    border-radius: 6px;
-    box-shadow: 0 0 30px rgba(0,0,0,0.8);
-    border: 4px solid #fff;
-    animation: zoomLightbox 0.4s ease;
+    max-width: 100%;
+    max-height: 65vh;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+    border: 5px solid #fff;
+    margin: 0 auto;
+    animation: zoomLightbox 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 @keyframes zoomLightbox {
-    from { transform: scale(0.7); opacity: 0; }
+    from { transform: scale(0.85); opacity: 0; }
     to { transform: scale(1); opacity: 1; }
 }
 
 .lightbox-caption {
-    margin: auto;
-    display: block;
-    width: 80%;
-    text-align: center;
     color: #fff;
-    padding: 20px 0;
-    font-size: 1.1rem;
-    font-weight: 700;
+    padding: 20px 10px 0 10px;
+    font-size: 1.05rem;
+    font-weight: 500;
+    line-height: 1.6;
+    text-align: center;
 }
 
 .lightbox-close {
     position: absolute;
-    top: 30px;
-    right: 35px;
+    top: 20px;
+    right: 25px;
     color: #f1f1f1;
-    font-size: 40px;
+    font-size: 45px;
     font-weight: bold;
     transition: 0.3s;
     cursor: pointer;
+    z-index: 2100;
 }
 
-.lightbox-close:hover,
-.lightbox-close:focus {
+.lightbox-close:hover {
     color: var(--primary);
-    transform: scale(1.1);
+    transform: scale(1.1) rotate(90deg);
+}
+
+/* INTERACTIVE BIRTHDAY CAKE SIDEBAR */
+.lightbox-cake-container {
+    flex: 0.8;
+    min-width: 320px;
+    max-width: 420px;
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+    animation: slideInCake 0.5s ease-out;
+}
+
+.lightbox-cake-container.hidden {
+    display: none !important;
+}
+
+@keyframes slideInCake {
+    from { transform: translateX(-50px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+.cake-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.cake-instruction {
+    font-family: var(--font-kufi);
+    font-size: 1.3rem;
+    color: var(--accent);
+    margin-bottom: 5px;
+    text-shadow: 0 0 8px rgba(255,215,0,0.3);
+}
+
+.cake-instruction-sub {
+    font-size: 0.85rem;
+    color: #bfaab5;
+    margin-bottom: 20px;
+}
+
+/* Cake Drawing CSS */
+.cake {
+    position: relative;
+    width: 220px;
+    height: 130px;
+    margin: 40px auto 20px auto;
+}
+
+.cake-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 220px;
+    height: 50px;
+    background: #4a2810; /* Rich Chocolate */
+    border-radius: 10px 10px 8px 8px;
+    box-shadow: inset 0 -5px 0 rgba(0,0,0,0.2);
+}
+
+.cake-middle {
+    position: absolute;
+    bottom: 40px;
+    left: 20px;
+    width: 180px;
+    height: 45px;
+    background: #ff5e7e; /* Strawberry Cream */
+    border-radius: 8px 8px 0 0;
+    box-shadow: inset 0 -4px 0 rgba(0,0,0,0.15);
+}
+
+.cake-top {
+    position: absolute;
+    bottom: 80px;
+    left: 40px;
+    width: 140px;
+    height: 40px;
+    background: #ffd166; /* Custard Vanilla */
+    border-radius: 6px 6px 0 0;
+    box-shadow: inset 0 -3px 0 rgba(0,0,0,0.15);
+}
+
+/* Cream drips on middle and top layers */
+.cake-top::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 100%;
+    height: 10px;
+    background-image: radial-gradient(circle, #ffd166 40%, transparent 45%);
+    background-size: 20px 20px;
+    background-position: 0 -8px;
+}
+
+.cake-middle::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 100%;
+    height: 10px;
+    background-image: radial-gradient(circle, #ff5e7e 40%, transparent 45%);
+    background-size: 20px 20px;
+    background-position: 0 -8px;
+}
+
+/* Candles */
+.candles-row {
+    position: absolute;
+    bottom: 115px;
+    left: 48px;
+    width: 124px;
+    height: 45px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    z-index: 10;
+}
+
+.candle {
+    width: 8px;
+    height: 35px;
+    background: linear-gradient(to right, #06d6a0, #4ade80);
+    border-radius: 4px 4px 0 0;
+    position: relative;
+    cursor: pointer;
+    box-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+}
+
+.candle:nth-child(2n) {
+    background: linear-gradient(to right, #ef476f, #f43f5e);
+}
+.candle:nth-child(3n) {
+    background: linear-gradient(to right, #118ab2, #38bdf8);
+}
+
+.candle::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: 3px;
+    width: 2px;
+    height: 4px;
+    background: #333;
+}
+
+.flame {
+    position: absolute;
+    top: -15px;
+    left: -2px;
+    width: 12px;
+    height: 16px;
+    background: radial-gradient(ellipse at bottom, #ffe47e 0%, #ff5e00 80%, transparent 100%);
+    border-radius: 50% 50% 20% 20% / 60% 60% 40% 40%;
+    box-shadow: 0 0 10px #ff5e00, 0 0 20px rgba(255, 94, 0, 0.4);
+    animation: flicker 0.15s ease-in-out infinite alternate;
+    transform-origin: bottom center;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.flame.out {
+    transform: scale(0);
+    opacity: 0;
+    pointer-events: none;
+}
+
+@keyframes flicker {
+    0% { transform: scale(1) rotate(-1deg); }
+    100% { transform: scale(1.15) rotate(2deg); }
+}
+
+/* Wish Message Box inside Cake container */
+.cake-wish-message {
+    margin-top: 25px;
+    background: rgba(255, 51, 102, 0.15);
+    border: 1.5px solid var(--primary);
+    border-radius: 12px;
+    padding: 15px 20px;
+    box-shadow: 0 0 15px rgba(255, 51, 102, 0.2);
+    animation: popWish 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.cake-wish-message.hidden {
+    display: none;
+}
+
+@keyframes popWish {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.cake-wish-message h4 {
+    font-family: var(--font-kufi);
+    font-size: 1.1rem;
+    color: var(--accent);
+    margin-bottom: 5px;
+}
+
+.cake-wish-message p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #fff;
 }
 
 /* FOOTER */
