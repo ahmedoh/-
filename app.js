@@ -292,7 +292,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const cakeWishMessageMain = document.getElementById('cake-wish-message-main');
     const cake3dWrapper = document.getElementById('cake-3d-wrapper');
     const plateStage = document.getElementById('plate-stage');
-    const candles3D = document.querySelectorAll('.candle-3d');
+    const candlesLuxury = document.querySelectorAll('.candle-luxury');
     let blownOutCandlesMain = 0;
 
     // Reset speech synthesis when page is interacted
@@ -326,7 +326,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Handle candle blowing click on main page
-    candles3D.forEach(candle => {
+    candlesLuxury.forEach(candle => {
         candle.addEventListener('click', (e) => {
             const flame = candle.querySelector('.flame');
             if (flame && !flame.classList.contains('out')) {
@@ -341,10 +341,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 // If all 5 candles are blown out
                 if (blownOutCandlesMain === 5) {
                     setTimeout(() => {
-                        // 1. Fade out the 3D rotating cake
+                        // 1. Fade out the luxury cake image wrapper
                         cake3dWrapper.classList.add('fade-out');
                         
-                        // 2. Wait for the fade-out transition, then swap to the plate and slice of cake
+                        // 2. Wait for the fade-out transition, then swap to the plate and slice of cake image
                         setTimeout(() => {
                             plateStage.classList.remove('hidden');
                             cakeWishMessageMain.classList.remove('hidden');

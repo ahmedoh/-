@@ -907,126 +907,85 @@ body {
     align-items: center;
 }
 
-/* 3D Rotating Cake */
-.cake-3d-wrapper {
-    perspective: 1000px;
-    width: 300px;
-    height: 300px;
+/* Luxury Cake Image Wrapper */
+.cake-luxury-wrapper {
+    position: relative;
+    width: 320px;
+    height: 320px;
     display: flex;
     justify-content: center;
     align-items: center;
     transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
-.cake-3d-wrapper.fade-out {
+.cake-luxury-wrapper.fade-out {
     opacity: 0;
-    transform: scale(0.5) rotateY(180deg) translateY(100px);
+    transform: scale(0.6) rotate(20deg);
     pointer-events: none;
 }
 
-.cake-3d {
-    position: relative;
-    width: 200px;
-    height: 100px;
-    transform-style: preserve-3d;
-    transform: rotateX(-20deg) rotateY(0deg);
-    animation: rotateCake 15s linear infinite;
-}
-
-@keyframes rotateCake {
-    0% { transform: rotateX(-22deg) rotateY(0deg); }
-    100% { transform: rotateX(-22deg) rotateY(-360deg); }
-}
-
-/* cylinder panels of cake */
-.cake-side {
-    position: absolute;
-    width: 200px;
-    height: 100px;
-    background: linear-gradient(to bottom, #741d31, #4c1120);
-    border-top: 3px solid #ff5e7e;
-    border-bottom: 3px solid #330c15;
-    opacity: 0.95;
-    box-shadow: inset 0 0 20px rgba(0,0,0,0.6);
-}
-
-.side-1 { transform: rotateY(0deg) translateZ(100px); }
-.side-2 { transform: rotateY(90deg) translateZ(100px); }
-.side-3 { transform: rotateY(180deg) translateZ(100px); }
-.side-4 { transform: rotateY(270deg) translateZ(100px); }
-
-/* Cake Top Face */
-.cake-top-face {
-    position: absolute;
-    width: 200px;
-    height: 200px;
-    background: radial-gradient(circle, #ff85a2 30%, #ff5e7e 100%);
-    border-radius: 50%;
-    transform: rotateX(90deg) translateZ(50px);
-    box-shadow: inset 0 0 15px rgba(0,0,0,0.2), 0 5px 15px rgba(0,0,0,0.3);
-    border: 5px solid #fff;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 5;
-}
-
-.cake-photo-frosting {
+.cake-luxury-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: 50%;
-    opacity: 0.9;
-    filter: brightness(1.05) contrast(1.05);
-    border: 3px solid #ffd700;
+    border: 5px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.6);
 }
 
-/* Cream drips decorative */
-.frosting-edge {
+.cake-photo-overlay-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 4px solid #fff;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    z-index: 5;
+    background-color: #fff;
+}
+
+.cake-photo-overlay {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.95;
+}
+
+/* Candles placed on the luxury cake */
+.candles-luxury-group {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    border-radius: 50%;
-    border: 8px dashed rgba(255, 255, 255, 0.4);
+    z-index: 10;
     pointer-events: none;
 }
 
-/* 3D Candles on the Top Face */
-.candles-3d-group {
-    position: absolute;
-    width: 200px;
-    height: 200px;
-    transform: rotateX(90deg) translateZ(50px);
-    transform-style: preserve-3d;
-    z-index: 6;
-}
-
-.candle-3d {
+.candle-luxury {
     position: absolute;
     width: 8px;
-    height: 35px;
-    background: linear-gradient(to right, #06d6a0, #4ade80);
+    height: 38px;
+    background: linear-gradient(to right, #00ced1, #4ade80);
     border-radius: 3px 3px 0 0;
-    top: 50%;
-    left: 50%;
-    transform: translate3d(var(--c-x), var(--c-y), 17px) rotateX(-90deg);
-    transform-style: preserve-3d;
+    transform: translate(-50%, -100%); /* Align from bottom center */
     cursor: pointer;
-    box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
-    transition: transform 0.25s ease;
+    box-shadow: 1px 2px 4px rgba(0,0,0,0.4);
+    pointer-events: auto; /* Enable clicking */
 }
 
-.candle-3d:nth-child(2n) {
-    background: linear-gradient(to right, #ef476f, #f43f5e);
+.candle-luxury:nth-child(2n) {
+    background: linear-gradient(to right, #ff4500, #ff85a2);
 }
-.candle-3d:nth-child(3n) {
-    background: linear-gradient(to right, #118ab2, #38bdf8);
+.candle-luxury:nth-child(3n) {
+    background: linear-gradient(to right, #ffd700, #ff85a2);
 }
 
-.candle-3d::before {
+.candle-luxury::before {
     content: '';
     position: absolute;
     top: -4px;
@@ -1036,7 +995,7 @@ body {
     background: #333;
 }
 
-.candle-3d .flame {
+.candle-luxury .flame {
     position: absolute;
     top: -15px;
     left: -2px;
@@ -1050,7 +1009,7 @@ body {
     transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
-.candle-3d .flame.out {
+.candle-luxury .flame.out {
     transform: scale(0);
     opacity: 0;
     pointer-events: none;
@@ -1061,11 +1020,11 @@ body {
     100% { transform: scale(1.15) rotate(2deg); }
 }
 
-/* THE PLATE & CAKE SLICE */
+/* THE PLATE STAGE FOR SLICE */
 .plate-stage {
     position: absolute;
-    width: 300px;
-    height: 300px;
+    width: 320px;
+    height: 320px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1081,104 +1040,26 @@ body {
     to { opacity: 1; transform: scale(1) translateY(0); }
 }
 
-.glass-plate {
+.glass-plate-luxury {
     position: relative;
-    width: 260px;
-    height: 260px;
-    background: radial-gradient(circle, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.06) 70%, transparent 100%);
-    border: 2px solid rgba(255,255,255,0.25);
-    border-radius: 50%;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.5), inset 0 0 20px rgba(255,255,255,0.15);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    perspective: 800px;
-    transform-style: preserve-3d;
+    width: 300px;
+    height: 300px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    border: 3px solid rgba(255,255,255,0.15);
 }
 
-/* 3D Cake Slice */
-.cake-slice-3d {
-    position: relative;
-    width: 100px;
-    height: 80px;
-    transform-style: preserve-3d;
-    transform: rotateX(45deg) rotateY(-25deg) translateY(-10px);
-    animation: dropSlice 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s forwards;
-    opacity: 0;
+.cake-slice-luxury-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    animation: dropSlice 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
 @keyframes dropSlice {
-    0% { opacity: 0; transform: rotateX(45deg) rotateY(-25deg) translate3d(0, -200px, 100px); }
-    100% { opacity: 1; transform: rotateX(45deg) rotateY(-25deg) translate3d(0, 0, 0); }
-}
-
-.slice-side {
-    position: absolute;
-    height: 80px;
-    transform-origin: left center;
-}
-
-.slice-left {
-    width: 120px;
-    background: linear-gradient(135deg, #4a2810 0%, #ff5e7e 50%, #4a2810 100%);
-    transform: rotateY(-30deg);
-    box-shadow: inset 0 0 15px rgba(0,0,0,0.3);
-}
-
-.slice-right {
-    width: 120px;
-    background: linear-gradient(45deg, #4a2810 0%, #ff5e7e 50%, #4a2810 100%);
-    transform: rotateY(30deg) translateZ(60px); /* adjusted to form a triangle */
-    box-shadow: inset 0 0 15px rgba(0,0,0,0.3);
-}
-
-.slice-back {
-    position: absolute;
-    width: 60px;
-    height: 80px;
-    background: linear-gradient(to bottom, #ffd166, #ff5e7e);
-    transform: translate3d(85px, 0, 30px) rotateY(90deg);
-}
-
-.slice-top {
-    position: absolute;
-    width: 120px;
-    height: 60px;
-    background: #ff5e7e;
-    transform: rotateX(90deg) rotateZ(30deg) translate3d(30px, -30px, 40px);
-    clip-path: polygon(0 50%, 100% 0, 100% 100%);
-}
-
-.cherry {
-    position: absolute;
-    font-size: 1.6rem;
-    top: -25px;
-    left: 85px;
-    transform: translateZ(50px);
-    animation: bounceCherry 1s infinite alternate;
-}
-
-@keyframes bounceCherry {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(-5px); }
-}
-
-/* Golden Fork */
-.golden-fork {
-    position: absolute;
-    bottom: 30px;
-    right: 40px;
-    font-size: 2.2rem;
-    color: #ffd700;
-    transform: rotate(45deg) translateZ(10px);
-    text-shadow: 0 4px 10px rgba(0,0,0,0.5);
-    animation: slideFork 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1.2s forwards;
-    opacity: 0;
-}
-
-@keyframes slideFork {
-    0% { opacity: 0; transform: rotate(45deg) translate3d(100px, 100px, 0); }
-    100% { opacity: 1; transform: rotate(45deg) translate3d(0, 0, 0); }
+    0% { transform: scale(0.7) translateY(-100px); opacity: 0; }
+    100% { transform: scale(1) translateY(0); opacity: 1; }
 }
 
 /* Wish Message Box inside Cake container */
