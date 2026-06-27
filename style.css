@@ -864,15 +864,411 @@ body {
     transform: scale(1.1);
 }
 
-/* INTERACTIVE BIRTHDAY CAKE SECTION (MAIN PAGE) */
+/* ════════════════════════════════════════════════════
+   🎂  3D BIRTHDAY CAKE — Main styles
+   Uses CSS preserve-3d for realistic depth preview
+   ════════════════════════════════════════════════════ */
+
 .cake-section {
-    padding: 100px 20px;
+    padding: 100px 20px 80px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: linear-gradient(180deg, rgba(14, 9, 29, 0.4) 0%, rgba(20, 10, 48, 0.3) 100%);
+    background: linear-gradient(160deg, rgba(14,9,29,0.5) 0%, rgba(40,12,60,0.4) 100%);
     position: relative;
+    overflow: visible;
+}
+
+/* wrapper that holds the scene + the hint text */
+.cake-scene-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+/* 3D perspective container — the cake lives here */
+.cake-3d-scene {
+    perspective: 900px;
+    perspective-origin: 50% 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    /* slow auto-rotate on hover stops, always a slight tilt */
+    transform-style: preserve-3d;
+    animation: cakeFloat 5s ease-in-out infinite alternate;
+    cursor: default;
+    filter: drop-shadow(0 30px 60px rgba(0,0,0,0.7));
+}
+
+@keyframes cakeFloat {
+    0%   { transform: rotateX(8deg) rotateY(-6deg); }
+    50%  { transform: rotateX(10deg) rotateY(3deg); }
+    100% { transform: rotateX(8deg) rotateY(-4deg); }
+}
+
+/* ─── CANDLES ROW ─────────────────────────────────── */
+.cake-candles-row {
+    display: flex;
+    gap: 18px;
+    align-items: flex-end;
+    margin-bottom: -2px;
+    z-index: 20;
+}
+
+.cake-candle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    gap: 0;
+}
+.cake-candle:hover { transform: scaleY(1.08) translateY(-3px); }
+
+/* Candle body */
+.candle-body {
+    width: 12px;
+    height: 40px;
+    border-radius: 4px 4px 3px 3px;
+    box-shadow: inset -3px 0 6px rgba(0,0,0,0.3), inset 2px 0 4px rgba(255,255,255,0.25);
+    position: relative;
+}
+.candle-body::before {          /* wick */
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 6px;
+    background: #222;
+    border-radius: 2px;
+}
+.c-pink     { background: linear-gradient(to right, #f9a8d4, #ec4899); }
+.c-gold     { background: linear-gradient(to right, #fde68a, #f59e0b); }
+.c-mint     { background: linear-gradient(to right, #6ee7b7, #10b981); }
+.c-lavender { background: linear-gradient(to right, #c4b5fd, #8b5cf6); }
+.c-rose     { background: linear-gradient(to right, #fda4af, #f43f5e); }
+
+/* Flame */
+.candle-flame {
+    width: 14px;
+    height: 20px;
+    background: radial-gradient(ellipse at bottom, #ffe47e 0%, #ff8c00 60%, transparent 100%);
+    border-radius: 50% 50% 25% 25% / 60% 60% 40% 40%;
+    box-shadow: 0 0 10px #ff8c00, 0 0 22px rgba(255,140,0,0.5);
+    animation: flameFlicker 0.12s ease-in-out infinite alternate;
+    transform-origin: bottom center;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+    margin-bottom: 1px;
+}
+.candle-flame.out {
+    transform: scaleY(0) scaleX(0);
+    opacity: 0;
+    pointer-events: none;
+}
+@keyframes flameFlicker {
+    0%   { transform: scale(1)    rotate(-2deg); }
+    100% { transform: scale(1.18) rotate(3deg);  }
+}
+
+/* ─── CAKE TIER SYSTEM ────────────────────────────── */
+/* Each tier is a 3D box built with 5 faces */
+
+.cake-tier {
+    position: relative;
+    transform-style: preserve-3d;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+/* --- TOP TIER (smallest) --- */
+.tier-top  { width: 130px; height: 60px;  margin-bottom: 0; }
+/* --- MIDDLE TIER --- */
+.tier-mid  { width: 190px; height: 70px;  margin-bottom: 0; }
+/* --- BOTTOM TIER (largest) --- */
+.tier-bot  { width: 250px; height: 80px;  margin-bottom: 0; }
+
+/* ── Generic Tier Faces ─────────────────── */
+.tier-face {
+    position: absolute;
+}
+
+/* FRONT face */
+.tier-front {
+    width: 100%;
+    height: 100%;
+    background: var(--tc, #f9a8d4);
+    /* Realistic side shading via gradient */
+    background: linear-gradient(
+        105deg,
+        color-mix(in srgb, var(--tc, #f9a8d4) 80%, white 20%) 0%,
+        var(--tc, #f9a8d4) 50%,
+        color-mix(in srgb, var(--tc, #f9a8d4) 80%, black 20%) 100%
+    );
+    transform: translateZ(40px); /* depth = half of left/right width offset, tuned */
+    border: 1px solid rgba(255,255,255,0.15);
+}
+
+/* Adjust per tier (front depth = half tier-width * sin(viewing angle)) */
+.tier-top  .tier-front { transform: translateZ(28px); }
+.tier-mid  .tier-front { transform: translateZ(38px); }
+.tier-bot  .tier-front { transform: translateZ(48px); }
+
+/* BACK face */
+.tier-back {
+    width: 100%;
+    height: 100%;
+    background: color-mix(in srgb, var(--tc, #f9a8d4) 60%, black 40%);
+}
+.tier-top  .tier-back  { transform: translateZ(-28px); }
+.tier-mid  .tier-back  { transform: translateZ(-38px); }
+.tier-bot  .tier-back  { transform: translateZ(-48px); }
+
+/* LEFT face */
+.tier-left {
+    height: 100%;
+    background: color-mix(in srgb, var(--tc, #f9a8d4) 70%, black 30%);
+    left: 0;
+    transform-origin: left center;
+}
+.tier-top  .tier-left { width: 56px;  transform: rotateY(-90deg) translateZ(0px); }
+.tier-mid  .tier-left { width: 76px;  transform: rotateY(-90deg) translateZ(0px); }
+.tier-bot  .tier-left { width: 96px;  transform: rotateY(-90deg) translateZ(0px); }
+
+/* RIGHT face */
+.tier-right {
+    height: 100%;
+    background: color-mix(in srgb, var(--tc, #f9a8d4) 55%, black 45%);
+    right: 0;
+    transform-origin: right center;
+}
+.tier-top  .tier-right { width: 56px;  transform: rotateY(90deg) translateZ(0px); }
+.tier-mid  .tier-right { width: 76px;  transform: rotateY(90deg) translateZ(0px); }
+.tier-bot  .tier-right { width: 96px;  transform: rotateY(90deg) translateZ(0px); }
+
+/* TOP face — slightly lighter for the frosting-top feel */
+.tier-topf {
+    width: 100%;
+    background: color-mix(in srgb, var(--tc, #f9a8d4) 85%, white 15%);
+    transform-origin: top center;
+    top: 0;
+    left: 0;
+}
+.tier-top  .tier-topf { height: 56px;  transform: rotateX(90deg) translateZ(0); }
+.tier-mid  .tier-topf { height: 76px;  transform: rotateX(90deg) translateZ(0); }
+.tier-bot  .tier-topf { height: 96px;  transform: rotateX(90deg) translateZ(0); }
+
+/* ── Cream DRIPS ─────────────────────────────────── */
+.tier-drip-row {
+    position: absolute;
+    top: -1px;
+    left: 0;
+    width: 100%;
+    height: 0;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.drip {
+    position: absolute;
+    left: var(--dl, 10%);
+    top: 0;
+    width: 10px;
+    height: var(--dh, 16px);
+    background: rgba(255,255,255,0.9);
+    border-radius: 0 0 50% 50%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+
+/* ── Photo Print on TOP TIER ─────────────────────── */
+.cake-photo-print {
+    position: absolute;
+    top: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 3px solid #fff;
     overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    z-index: 15;
+}
+.photo-on-cake {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ── "22" Badge on MIDDLE TIER ───────────────────── */
+.cake-number-badge {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) translateZ(40px);
+    font-family: 'Caveat', cursive;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.5), 0 0 15px rgba(253,215,0,0.6);
+    pointer-events: none;
+    z-index: 12;
+    letter-spacing: 2px;
+}
+
+/* ── Rose Emojis on BOTTOM TIER ──────────────────── */
+.cake-roses {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%) translateZ(50px);
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    pointer-events: none;
+    z-index: 12;
+}
+
+/* ── CAKE BOARD ──────────────────────────────────── */
+.cake-board {
+    width: 300px;
+    height: 22px;
+    background: linear-gradient(to bottom, #e0c9f0, #c084fc);
+    border-radius: 6px 6px 4px 4px;
+    box-shadow:
+        0 8px 20px rgba(0,0,0,0.5),
+        inset 0 -4px 8px rgba(0,0,0,0.2),
+        inset 0 2px 5px rgba(255,255,255,0.3);
+    margin-top: -2px;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+/* ── Candle counter hint ─────────────────────────── */
+.candle-hint {
+    font-family: var(--font-cairo);
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.65);
+    text-align: center;
+    margin-top: 10px;
+}
+.candle-hint span {
+    color: var(--accent);
+    font-weight: 700;
+}
+
+/* ── Wish message revealed after all candles out ─── */
+.cake-wish-message-main {
+    margin-top: 40px;
+    background: rgba(255, 51, 102, 0.12);
+    border: 1.5px solid var(--primary);
+    border-radius: 20px;
+    padding: 28px 32px;
+    box-shadow: 0 0 30px rgba(255, 51, 102, 0.25);
+    animation: popWish 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-align: center;
+    max-width: 520px;
+    width: 90%;
+}
+.cake-wish-message-main.hidden { display: none; }
+
+.wish-big-emoji {
+    font-size: 2.5rem;
+    margin-bottom: 12px;
+    animation: emojiPop 0.5s ease;
+}
+@keyframes emojiPop {
+    from { transform: scale(0); }
+    to   { transform: scale(1); }
+}
+
+.cake-wish-message-main h4 {
+    font-family: var(--font-kufi);
+    font-size: 1.3rem;
+    color: var(--accent);
+    margin-bottom: 10px;
+    text-shadow: 0 0 8px rgba(253,215,0,0.4);
+}
+.cake-wish-message-main p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #fff;
+}
+
+@keyframes popWish {
+    from { transform: scale(0.7) translateY(30px); opacity: 0; }
+    to   { transform: scale(1) translateY(0);      opacity: 1; }
+}
+
+/* ════════════════════════════════════════════════════
+   🍰  FOOTER — Served Slice of Cake Finale
+   ════════════════════════════════════════════════════ */
+
+/* FOOTER */
+.celebration-footer {
+    padding: 60px 20px 40px;
+    text-align: center;
+    background: #050309;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* The served slice plate */
+.footer-slice-finale {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 40px;
+    animation: servePlate 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes servePlate {
+    from { opacity: 0; transform: scale(0.5) translateY(80px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.footer-slice-plate {
+    width: 260px;
+    height: 200px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow:
+        0 20px 50px rgba(0,0,0,0.7),
+        0 0 0 3px rgba(255,255,255,0.1);
+}
+.footer-slice-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.footer-slice-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+.footer-slice-emoji {
+    font-size: 1.8rem;
+    animation: heartBeat 1.2s infinite ease-in-out;
+}
+.footer-slice-text p {
+    font-family: var(--font-kufi);
+    font-size: 1.3rem;
+    color: var(--accent);
+    text-shadow: 0 0 10px rgba(253,215,0,0.4);
+    margin: 0;
+}
+
+.celebration-footer > p {
+    font-size: 1rem;
+    color: #bfaab5;
+    margin-bottom: 8px;
+}
+.footer-sub {
+    font-size: 0.8rem !important;
+    color: #6a5d66 !important;
 }
 
 .cake-container-main {

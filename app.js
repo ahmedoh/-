@@ -288,74 +288,52 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- Interactive Birthday Cake Functions (Main Page) ---
+    // --- Interactive Birthday Cake Functions ---
     const cakeWishMessageMain = document.getElementById('cake-wish-message-main');
     const cake3dWrapper = document.getElementById('cake-3d-wrapper');
-    const plateStage = document.getElementById('plate-stage');
-    const candlesLuxury = document.querySelectorAll('.candle-luxury');
+    const candlesLeft = document.getElementById('candles-left');
+    const candleHint = document.getElementById('candle-hint');
+    const allCandles = document.querySelectorAll('.cake-candle');
     let blownOutCandlesMain = 0;
 
-    // Reset speech synthesis when page is interacted
-    function stopSpeech() {
-        if ('speechSynthesis' in window) {
-            window.speechSynthesis.cancel();
-        }
-    }
-
-    // Handle voice greeting speech using browser Web Speech API
     function playVoiceGreeting() {
         if ('speechSynthesis' in window) {
-            // Cancel any active speech synthesis
             window.speechSynthesis.cancel();
-            
             const message = "كل سنة وأنتِ طيبة يا إيمان، يا منمونة يا أحلى لا لا في الدنيا! عيد ميلاد سعيد وعقبال مية سنة حلوة وأنتِ في الـ ٢٢ مع حبيبك دايماً وبخير وسعادة!";
             const utterance = new SpeechSynthesisUtterance(message);
-            utterance.lang = 'ar-EG'; // Egyptian Arabic localization
-            utterance.rate = 0.82; // Slower rate for clear, warm pacing
-            utterance.pitch = 1.05; // Slightly higher pitch for positive/celebratory tone
-            
-            // Try to bind a specific Arabic voice if available
+            utterance.lang = 'ar-EG';
+            utterance.rate = 0.82;
+            utterance.pitch = 1.05;
             const voices = window.speechSynthesis.getVoices();
             const arabicVoice = voices.find(v => v.lang.includes('ar'));
-            if (arabicVoice) {
-                utterance.voice = arabicVoice;
-            }
-            
+            if (arabicVoice) utterance.voice = arabicVoice;
             window.speechSynthesis.speak(utterance);
         }
     }
 
-    // Handle candle blowing click on main page
-    candlesLuxury.forEach(candle => {
-        candle.addEventListener('click', (e) => {
-            const flame = candle.querySelector('.flame');
+    allCandles.forEach(candle => {
+        candle.addEventListener('click', () => {
+            const flame = candle.querySelector('.candle-flame');
             if (flame && !flame.classList.contains('out')) {
                 flame.classList.add('out');
-                
-                // Explode particles at candle position instantly
+
+                // Burst particles at candle position
                 const rect = candle.getBoundingClientRect();
-                generateBurst(rect.left + rect.width / 2, rect.top, 15);
-                
+                generateBurst(rect.left + rect.width / 2, rect.top + 10, 20);
+
                 blownOutCandlesMain++;
-                
-                // If all 5 candles are blown out
+                const remaining = 5 - blownOutCandlesMain;
+                if (candlesLeft) candlesLeft.textContent = remaining;
+
                 if (blownOutCandlesMain === 5) {
+                    // All candles blown!
+                    if (candleHint) candleHint.style.display = 'none';
+
                     setTimeout(() => {
-                        // 1. Fade out the luxury cake image wrapper
-                        cake3dWrapper.classList.add('fade-out');
-                        
-                        // 2. Wait for the fade-out transition, then swap to the plate and slice of cake image
-                        setTimeout(() => {
-                            plateStage.classList.remove('hidden');
-                            cakeWishMessageMain.classList.remove('hidden');
-                            
-                            // 3. Trigger a massive celebratory confetti burst
-                            generateBurst(window.innerWidth / 2, window.innerHeight / 2 - 50, 100);
-                            
-                            // 4. Speak the custom voice greeting congratulating her!
-                            playVoiceGreeting();
-                        }, 800);
-                    }, 500);
+                        if (cakeWishMessageMain) cakeWishMessageMain.classList.remove('hidden');
+                        generateBurst(window.innerWidth / 2, window.innerHeight / 2, 120);
+                        playVoiceGreeting();
+                    }, 600);
                 }
             }
         });
