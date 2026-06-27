@@ -204,20 +204,32 @@ document.addEventListener('DOMContentLoaded', () => {
         
         for (let i = 0; i < 6; i++) {
             const balloon = document.createElement('div');
-            balloon.classList.add('balloon', `balloon-color-${(i % 6) + 1}`);
+            // Add color, and the new positional class for bouquet layout
+            balloon.classList.add('balloon', `balloon-color-${(i % 6) + 1}`, `b-pos-${i + 1}`);
+            
+            // Add knot decoration
+            const knot = document.createElement('div');
+            knot.classList.add('balloon-knot');
+            balloon.appendChild(knot);
+            
+            // Add string decoration
+            const string = document.createElement('div');
+            string.classList.add('balloon-string');
+            balloon.appendChild(string);
             
             // Slightly stagger animation start
-            balloon.style.animationDelay = `${Math.random() * 2}s`;
+            balloon.style.animationDelay = `${Math.random() * 1.5}s`;
             
+            // Instant Pop Action
             balloon.addEventListener('click', (e) => {
                 if (!balloon.classList.contains('popped')) {
                     balloon.classList.add('popped');
                     
-                    // Burst particles at click location
+                    // Burst particles at click location instantly
                     const rect = balloon.getBoundingClientRect();
-                    generateBurst(rect.left + rect.width / 2, rect.top + rect.height / 2, 40);
+                    generateBurst(rect.left + rect.width / 2, rect.top + rect.height / 2, 45);
                     
-                    // Show message
+                    // Show message instantly without delay
                     showWishMessage(loveReasons[i]);
                     
                     // Track pops
@@ -227,7 +239,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             showWishMessage("كل بالونة فرقعتيها بتعبر عن جزء صغير من حبي ودلعي ليكي. كل سنة وأنتِ منورة حياتي يا مُنَّه! 💖✨");
                             // Add a massive confetti celebration
                             generateBurst(window.innerWidth / 2, window.innerHeight / 2, 100);
-                        }, 3000);
+                        }, 1200);
                     }
                 }
             });
@@ -278,7 +290,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Interactive Birthday Cake Functions (Main Page) ---
     const cakeWishMessageMain = document.getElementById('cake-wish-message-main');
-    const candlesMain = document.querySelectorAll('#candles-row-main .candle');
+    const cake3dWrapper = document.getElementById('cake-3d-wrapper');
+    const plateStage = document.getElementById('plate-stage');
+    const candles3D = document.querySelectorAll('.candle-3d');
     let blownOutCandlesMain = 0;
 
     // Reset speech synthesis when page is interacted
@@ -312,13 +326,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Handle candle blowing click on main page
-    candlesMain.forEach(candle => {
+    candles3D.forEach(candle => {
         candle.addEventListener('click', (e) => {
             const flame = candle.querySelector('.flame');
             if (flame && !flame.classList.contains('out')) {
                 flame.classList.add('out');
                 
-                // Explode particles at candle position
+                // Explode particles at candle position instantly
                 const rect = candle.getBoundingClientRect();
                 generateBurst(rect.left + rect.width / 2, rect.top, 15);
                 
@@ -327,12 +341,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 // If all 5 candles are blown out
                 if (blownOutCandlesMain === 5) {
                     setTimeout(() => {
-                        cakeWishMessageMain.classList.remove('hidden');
-                        // Massive burst of confetti in the center
-                        generateBurst(window.innerWidth / 2, window.innerHeight / 2, 80);
-                        // Congratulate her with a custom audio voice greeting!
-                        playVoiceGreeting();
-                    }, 400);
+                        // 1. Fade out the 3D rotating cake
+                        cake3dWrapper.classList.add('fade-out');
+                        
+                        // 2. Wait for the fade-out transition, then swap to the plate and slice of cake
+                        setTimeout(() => {
+                            plateStage.classList.remove('hidden');
+                            cakeWishMessageMain.classList.remove('hidden');
+                            
+                            // 3. Trigger a massive celebratory confetti burst
+                            generateBurst(window.innerWidth / 2, window.innerHeight / 2 - 50, 100);
+                            
+                            // 4. Speak the custom voice greeting congratulating her!
+                            playVoiceGreeting();
+                        }, 800);
+                    }, 500);
                 }
             }
         });

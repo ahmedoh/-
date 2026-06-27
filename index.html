@@ -107,28 +107,62 @@
         <!-- INTERACTIVE BIRTHDAY CAKE SECTION -->
         <section class="cake-section" id="cake-section">
             <div class="section-title">
-                <h2>🎂 اطفي شمع عيد ميلادك الـ 22 يا مُنَّه!</h2>
-                <p>اضغطي على الشمع لتطفئيه وتتمني أمنية جميلة ✨</p>
+                <h2>🎂 تورتة الاحتفال التفاعلية ثلاثية الأبعاد</h2>
+                <p>اضغطي على الشمع لتطفئيه وتتمني أمنية جميلة! ✨</p>
             </div>
             
             <div class="cake-container-main">
                 <div class="cake-box-main">
-                    <div class="cake">
-                        <div class="cake-top"></div>
-                        <div class="cake-middle"></div>
-                        <div class="cake-bottom"></div>
-                        <div class="candles-row" id="candles-row-main">
-                            <div class="candle" id="candle-1"><div class="flame"></div></div>
-                            <div class="candle" id="candle-2"><div class="flame"></div></div>
-                            <div class="candle" id="candle-3"><div class="flame"></div></div>
-                            <div class="candle" id="candle-4"><div class="flame"></div></div>
-                            <div class="candle" id="candle-5"><div class="flame"></div></div>
+                    <!-- THE 3D CAKE STAGE -->
+                    <div class="cake-stage" id="cake-stage">
+                        
+                        <!-- 3D Rotating Cake -->
+                        <div class="cake-3d-wrapper" id="cake-3d-wrapper">
+                            <div class="cake-3d" id="cake-3d">
+                                <!-- Cake cylinder sides -->
+                                <div class="cake-side side-1"></div>
+                                <div class="cake-side side-2"></div>
+                                <div class="cake-side side-3"></div>
+                                <div class="cake-side side-4"></div>
+                                <!-- Cake Top Face with Minnah's photo -->
+                                <div class="cake-top-face">
+                                    <img src="images/photo1.jpg" alt="صورة منة على التورتة" class="cake-photo-frosting">
+                                    <div class="frosting-edge"></div>
+                                </div>
+                                <!-- Candles placed on top face -->
+                                <div class="candles-3d-group">
+                                    <div class="candle-3d" id="c3d-1" style="--c-x: -35px; --c-y: -35px;"><div class="flame"></div></div>
+                                    <div class="candle-3d" id="c3d-2" style="--c-x: 35px; --c-y: -35px;"><div class="flame"></div></div>
+                                    <div class="candle-3d" id="c3d-3" style="--c-x: 0px; --c-y: 0px;"><div class="flame"></div></div>
+                                    <div class="candle-3d" id="c3d-4" style="--c-x: -40px; --c-y: 35px;"><div class="flame"></div></div>
+                                    <div class="candle-3d" id="c3d-5" style="--c-x: 40px; --c-y: 35px;"><div class="flame"></div></div>
+                                </div>
+                            </div>
                         </div>
+
+                        <!-- The Plate Stage (Initially Hidden) -->
+                        <div class="plate-stage hidden" id="plate-stage">
+                            <div class="glass-plate">
+                                <!-- Cake Slice (Prism Structure) -->
+                                <div class="cake-slice-3d" id="cake-slice-3d">
+                                    <div class="slice-side slice-left"></div>
+                                    <div class="slice-side slice-right"></div>
+                                    <div class="slice-top"></div>
+                                    <div class="slice-back"></div>
+                                    <div class="cherry">🍒</div>
+                                </div>
+                                <!-- Golden Fork -->
+                                <div class="golden-fork" id="golden-fork">
+                                    <i class="fa-solid fa-utensils"></i>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                     
                     <div id="cake-wish-message-main" class="cake-wish-message-main hidden">
-                        <h4>✨ أمنيتك اتحققت وسنتك الجديدة سعيدة! ✨</h4>
-                        <p>ربنا يخلينا لبعض يا أحلى مُنَّه في الدنيا، وسنة 22 جميلة كلها حب وفرحة وسعادة! 💖</p>
+                        <h4>✨ بألف هنا وشفا يا روحي! 🍰🍴</h4>
+                        <p>ربنا يخلينا لبعض يا أحلى مُنَّه (إيمان/LALA) في الدنيا، وسنة 22 جميلة كلها فرحة وسعادة دايماً يا نكدي! 💖</p>
                     </div>
                 </div>
             </div>
